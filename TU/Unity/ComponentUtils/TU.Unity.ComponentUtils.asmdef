@@ -1,9 +1,10 @@
 {
     "name": "TU.Unity.ComponentUtils",
     "references": [
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
-        "GUID:52269a38b160b504d80117779ab99f69"
+        "GUID:52269a38b160b504d80117779ab99f69",
+        "GUID:2834a31340b834f42943b439d45033f5"
     ],
+    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -11,6 +12,5 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+    "versionDefines": []
 }
