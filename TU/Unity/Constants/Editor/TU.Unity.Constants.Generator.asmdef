@@ -1,7 +1,10 @@
 {
-    "name": "Sirenix.PageSliderAttribute",
+    "name": "TU.Unity.Constants.Generator",
     "references": [],
-    "includePlatforms": [],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

@@ -1,3 +1,13 @@
-﻿{
-	"name": "TU.Unity.Constants"
+{
+    "name": "TU.Unity.Constants",
+    "references": [],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
 }
