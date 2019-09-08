@@ -52,4 +52,6 @@ public static class UnityTools
 
         public static bool IsMainScene(string sceneName) => sceneName.ToLower().Contains("main");
     }
+    
+    
 }
