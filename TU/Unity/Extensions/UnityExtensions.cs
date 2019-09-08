@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public static class UnityExtensions
 {
@@ -30,5 +31,17 @@ public static class UnityExtensions
     {
         source.TryGetValue(key, out var currentValue);
         source[key] = doFunc.Invoke(currentValue);
+    }
+
+    public static void DestroySmart(this Object obj)
+    {
+#if UNITY_EDITOR
+        if (Application.isPlaying)    
+            Object.Destroy(obj);
+        else
+            Object.DestroyImmediate(obj);
+#else
+        Object.Destroy(obj);
+#endif
     }
 }
