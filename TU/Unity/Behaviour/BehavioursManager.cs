@@ -1,28 +1,34 @@
+using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+using Sirenix.Utilities;
 using UniRx;
+using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace TU.Unity.Enabable
 {
+    [Serializable]
     public class BehavioursManager
-    {
-        public List<IBehaviour> enabables = new List<IBehaviour>();
-
-        public void Initialize(MonoBehaviour user, bool disableAllOnDestroy)
-        {
-            if (disableAllOnDestroy)
-            {
-                
-            }
-        }
+    { 
+        public MonoBehaviour[] behaviours = new MonoBehaviour[0];
         
         public void EnableOnly(int id)
         {
-            for (int i = 0; i < enabables.Count; i++)
-                enabables[i].enabled = i == id;
+            for (int i = 0; i < behaviours.Length; i++)
+                behaviours[i].enabled = i == id;
         }
 
         public void SetEnabled(int id, bool enabled)
-            => enabables[id].enabled = enabled;
+            => behaviours[id].enabled = enabled;
+
+        [Button]
+        private void EnableOnlyFirst()
+        {
+            behaviours.ForEach(x => x.enabled = false);
+            behaviours[0].enabled = true;
+        }
     }
 }
