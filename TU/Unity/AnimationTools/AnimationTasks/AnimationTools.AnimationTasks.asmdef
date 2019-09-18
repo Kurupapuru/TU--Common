@@ -1,0 +1,15 @@
+{
+    "name": "AnimationTools.AnimationTasks",
+    "references": [
+        "GUID:2834a31340b834f42943b439d45033f5"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

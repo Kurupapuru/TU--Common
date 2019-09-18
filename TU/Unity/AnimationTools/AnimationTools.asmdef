@@ -1,0 +1,15 @@
+{
+    "name": "AnimationTools",
+    "references": [
+        "GUID:199e5f276890c9f47875e8b63e5eccad"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
