@@ -1,0 +1,15 @@
+{
+    "name": "AnimationTools.CurveParticles",
+    "references": [
+        "AnimationTools.AnimationTasks",
+        "UniRx"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
