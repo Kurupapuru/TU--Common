@@ -1,4 +1,6 @@
-﻿using BehavioursBasedCamera;
+﻿/*
+
+using BehavioursBasedCamera;
 
 namespace Shared.Code.CharacterController
 {
@@ -6,7 +8,7 @@ namespace Shared.Code.CharacterController
     using UnityEngine;
 
 
-    public class OneDirectionCharacterController : MonoBehaviourPun
+    public class OneDirectionCharacterController_Photon : MonoBehaviourPun
     {
         [Header("References")] public Animator animator;
 
@@ -50,3 +52,5 @@ namespace Shared.Code.CharacterController
         }
     }
 }
+
+*/
