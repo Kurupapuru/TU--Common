@@ -1,6 +1,7 @@
 ﻿using System;
 using BehavioursBasedCamera;
 using KurupapuruLab.KRobots;
+using Lean.Touch;
 using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
@@ -16,17 +17,43 @@ namespace Shared.Code.CharacterControl
         public float movementSpeedMultiplier = 1;
         public float rotationLerpSpeed = 1;
         public LayerMask invisiblePlaneMask;
-        private Camera _camera;
+
+        [Header("FirstPersonMouseCamera")]
+        public Camera topDownCamera;
+        public Camera firstPersonCamera;
+        private Transform firstPersonCameraT;
+        [Space]
+        public float minVerticalRotation = 10;
+        public float maxVerticalRotation = 80;
+        public float verticalRotationSpeed   = 1;
+        public float horizontalRotationSpeed = 1;
+        
+        private CameraLerper _cameraLerper;
         private IDisposable behaviourTask;
 
 
         private void Start()
         {
-            _camera = BehavioursBasedCameraController.instance.camera;
+            firstPersonCameraT = firstPersonCamera.transform;
+            
+            MainCamera.camera.Subscribe(x =>
+            {
+                if (x != null)
+                    _cameraLerper = x.GetComponent<CameraLerper>();
+            }).AddTo(this);
 
             UpdateMovementSpeed();
 
-            EnableWASDMovement();
+            EnableTopDownWASDMovement();
+            //EnableFirstPersonWASD();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F3))
+                EnableTopDownWASDMovement();
+            if (Input.GetKeyDown(KeyCode.F1))
+                EnableFirstPersonWASD();
         }
 
         public void UpdateMovementSpeed()
@@ -34,8 +61,13 @@ namespace Shared.Code.CharacterControl
             animator.SetFloat("Movement Speed", movementSpeedMultiplier);
         }
 
-        public void EnableWASDMovement()
+
+        #region TopDown WASD
+
+        public void EnableTopDownWASDMovement()
         {
+            _cameraLerper.LerpTo(topDownCamera, 1, true);
+            
             behaviourTask?.Dispose();
             behaviourTask = Observable.EveryUpdate().Subscribe(_ =>
             {
@@ -53,7 +85,7 @@ namespace Shared.Code.CharacterControl
 
             if (rotateInput)
                 input3D =
-                    Quaternion.AngleAxis(_camera.transform.eulerAngles.y - transform.eulerAngles.y, Vector3.up) *
+                    Quaternion.AngleAxis(_cameraLerper.transform.eulerAngles.y - transform.eulerAngles.y, Vector3.up) *
                     input3D;
 
             animator.SetFloat(-1348911080, input3D.z); // Movement Vertical
@@ -74,5 +106,43 @@ namespace Shared.Code.CharacterControl
             transform.eulerAngles =
                 MathGod.LerpEulerAngle(transform.eulerAngles, rotationEuler, rotationLerpSpeed * Time.deltaTime);
         }
+
+        #endregion
+
+        
+        #region First Person WASD
+
+        public void EnableFirstPersonWASD()
+        {
+            _cameraLerper.LerpTo(firstPersonCamera, 1, true);
+
+            behaviourTask?.Dispose();
+            behaviourTask = Observable.EveryUpdate().Subscribe(_ =>
+            {
+                MovementUpdate(
+                    Input.GetAxis("Vertical"),
+                    Input.GetAxis("Horizontal"),
+                    false);
+
+                FirstPersonMouseCameraUpdate();
+            });
+        }
+
+        private void FirstPersonMouseCameraUpdate()
+        {
+            var fingers = LeanTouch.Fingers;
+            if (fingers.Count == 0) return;
+            var firstFinger = fingers[0];
+            
+            transform.Rotate(0, firstFinger.ScaledDelta.x * horizontalRotationSpeed, 0);
+
+            var newCameraRot = firstPersonCameraT.eulerAngles;
+            if (newCameraRot.x > 180) newCameraRot.x -= 360;
+            newCameraRot.x += firstFinger.ScaledDelta.y * verticalRotationSpeed;
+            newCameraRot.x = Mathf.Clamp(newCameraRot.x, minVerticalRotation, maxVerticalRotation);
+            firstPersonCameraT.eulerAngles = newCameraRot;
+        }
+
+        #endregion
     }
 }

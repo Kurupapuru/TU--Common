@@ -7,5 +7,6 @@ namespace MGame.Code.Skills.Base.Interfaces
         LayerMask invisiblePlaneLayerMask { get; }
         LayerMask attackMask { get; }
         Transform UserTransform { get; }
+        Rigidbody UserRigidbody { get; }
     }
 }

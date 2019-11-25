@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using MGame.Code.Characters;
 using MGame.Code.Skills.Base.Interfaces;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace MGame.Code.Skills.Base.SkillsUsers
@@ -13,9 +14,11 @@ namespace MGame.Code.Skills.Base.SkillsUsers
         [SerializeField] private LayerMask _attackMask;
         public LayerMask attackMask => _attackMask;
         public Transform UserTransform => transform;
+        public Rigidbody UserRigidbody => userRigidbody;
 
-        [SerializeField] private CharacterSettings _characterSettings;
+        [SerializeField] [InlineEditor()] private CharacterSettings _characterSettings;
         [SerializeField] private KeyCode[] skillKeys;
+        [SerializeField] private Rigidbody userRigidbody;
 
         public CharacterSettings CharacterSettings => _characterSettings;
 
