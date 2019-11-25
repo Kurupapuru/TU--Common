@@ -51,50 +51,5 @@ namespace AmplifyShaderEditor
 		{
 			AmplifyShaderEditorWindow.CreateNewTemplateShader( "003dfa9c16768d048b74f75c088119d8" );
 		}
-		[MenuItem( "Assets/Create/Amplify Shader/Templates/Legacy/DefaultUnlit", false, 85 )]
-		public static void ApplyTemplate9()
-		{
-			AmplifyShaderEditorWindow.CreateNewTemplateShader( "2b133849854bc5f4aacf95ae83959b88" );
-		}
-		[MenuItem( "Assets/Create/Amplify Shader/Templates/Legacy/Particles Alpha Blended", false, 85 )]
-		public static void ApplyTemplate10()
-		{
-			AmplifyShaderEditorWindow.CreateNewTemplateShader( "0839e27ab7a3078458af28c0f1ce323b" );
-		}
-		[MenuItem( "Assets/Create/Amplify Shader/ASESampleTemplates/DoublePassUnlit", false, 85 )]
-		public static void ApplyTemplate11()
-		{
-			AmplifyShaderEditorWindow.CreateNewTemplateShader( "946f2e14e6c25b54bb7d608ee669c996" );
-		}
-		[MenuItem( "Assets/Create/Amplify Shader/Templates/Legacy/UnlitLightmap", false, 85 )]
-		public static void ApplyTemplate12()
-		{
-			AmplifyShaderEditorWindow.CreateNewTemplateShader( "56e1bce4c56d87f43a73b39957215e93" );
-		}
-		[MenuItem( "Assets/Create/Amplify Shader/Templates/Legacy/Sprites Default", false, 85 )]
-		public static void ApplyTemplate13()
-		{
-			AmplifyShaderEditorWindow.CreateNewTemplateShader( "8be3efd542bef3940b4e4621609282fd" );
-		}
-		[MenuItem( "Assets/Create/Amplify Shader/Templates/Legacy/PostProcess", false, 85 )]
-		public static void ApplyTemplate14()
-		{
-			AmplifyShaderEditorWindow.CreateNewTemplateShader( "7c719f069f14edd4abbc934f43be2cda" );
-		}
-		[MenuItem( "Assets/Create/Amplify Shader/Templates/Unlit", false, 85 )]
-		public static void ApplyTemplate15()
-		{
-			AmplifyShaderEditorWindow.CreateNewTemplateShader( "3e81e06b4546380479d97fa0938b0140" );
-		}
-		[MenuItem( "Assets/Create/Amplify Shader/Templates/Legacy/Multi Pass Unlit", false, 85 )]
-		public static void ApplyTemplate16()
-		{
-			AmplifyShaderEditorWindow.CreateNewTemplateShader( "d86d7bf6cd715a744a48f8ddb9a85884" );
-		}
-		[MenuItem( "Assets/Create/Amplify Shader/Templates/Legacy/UIDefault", false, 85 )]
-		public static void ApplyTemplate17()
-		{
-			AmplifyShaderEditorWindow.CreateNewTemplateShader( "b3c4be9dbc96be842ba94fb63b6a400b" );
-		}
 	}
 }
