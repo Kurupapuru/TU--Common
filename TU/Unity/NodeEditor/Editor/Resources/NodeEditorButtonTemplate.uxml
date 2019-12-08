@@ -1,0 +1,5 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+    <Button class="NodeEditor-IconButton">
+        <VisualElement class="NodeEditor-IconButton-Icon"/>
+    </Button>
+</UXML>

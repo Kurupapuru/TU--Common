@@ -1,0 +1,11 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+    <!-- Creates our template and gives it a name for future reference. -->
+<!--    <Template path="Assets/TU&#45;&#45;Common/TU/Unity/NodeEditor/Editor/Resources/NodeEditorButtonTemplate.uxml" name="button-template" />-->
+    <Template path="Assets/TU--Common/TU/Unity/NodeEditor/Editor/Resources/NodeEditor_CommentNode.uxml" name="comment-node" />
+    <!-- Creates a parent VisualElement in which we will add our template. -->
+    <VisualElement class="NodeEditor-root">
+        <VisualElement class="nodes-root">
+            <Instance template="comment-node" name="test-comment-node"/>
+        </VisualElement>
+    </VisualElement>
+</UXML>

@@ -1,0 +1,5 @@
+﻿<UXML xmlns="UnityEngine.UIElements">
+    <VisualElement class="Node">
+        <TextField class="Node-TextFieldBig"/>
+    </VisualElement>
+</UXML>

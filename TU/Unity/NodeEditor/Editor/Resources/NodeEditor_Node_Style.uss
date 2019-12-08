@@ -1,0 +1,13 @@
+﻿.Node {
+    width: 120px;
+    height: 75px;
+    background-color: #b4654d;
+    
+}
+
+.Node-TextFieldBig {
+    width: 100%;
+    height:100%;
+    margin: 5px;
+    background-color: #cf8e6b;
+}
