@@ -20,11 +20,11 @@ public static class UnityExtensions
 
     public static bool LayerCheck(this LayerMask layerMask, int layer) => layerMask == (layerMask | (1 << layer));
 
-    public static void DoForAllChilds(this Transform transform, Action<Transform> action, bool includeThis = true)
+    public static void ForEachChilds(this Transform transform, Action<Transform> action, bool includeThis = true)
     {
         if (includeThis) action.Invoke(transform);
         foreach (var child in transform)
-            DoForAllChilds((Transform) child, action, true);
+            ForEachChilds((Transform) child, action, true);
     }
 
     public static void ForceDo<TKey, TValue>(this Dictionary<TKey, TValue> source, TKey key, Func<TValue, TValue> doFunc)
