@@ -3,6 +3,7 @@ using BehavioursBasedCamera;
 using KurupapuruLab.KRobots;
 using Lean.Touch;
 using Sirenix.OdinInspector;
+using TU.Unity.CameraRelated;
 using UniRx;
 using UnityEngine;
 

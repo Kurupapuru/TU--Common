@@ -1,54 +1,56 @@
-﻿using ComponenetUtils;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
 
-public class DistanceToTargetModifier : MonoBehaviour
+namespace TU.Unity.ComponentUtils
 {
-    public Transform followTarget;
-    public float multDistanceValue = .5f;
-    public float addInertiaMult = .1f;
-    public float inertiaLerpValuePerSec = .5f;
-    public bool snapAndParentOnDisable = true;
-    public FakePhysicsWatcher physics;
-
-    private CompositeDisposable disposables = new CompositeDisposable();
-    private Vector3 inertia;
-
-
-    public void OnEnable()
+    public class DistanceToTargetModifier : MonoBehaviour
     {
-        Observable.EveryFixedUpdate()
-            .Subscribe(_ => MultDistance())
-            .AddTo(disposables);
+        public Transform followTarget;
+        public float multDistanceValue = .5f;
+        public float addInertiaMult = .1f;
+        public float inertiaLerpValuePerSec = .5f;
+        public bool snapAndParentOnDisable = true;
+        public FakePhysicsWatcher physics;
 
-        Observable.EveryFixedUpdate()
-            .Subscribe(_ => InertiaCalculations())
-            .AddTo(disposables);
-    }
+        private CompositeDisposable disposables = new CompositeDisposable();
+        private Vector3 inertia;
 
-    private void OnDisable()
-    {
-        disposables?.Dispose();
-        if (snapAndParentOnDisable)
+
+        public void OnEnable()
         {
-            if (this == null || followTarget == null) return;
-            transform.parent = followTarget.parent;
-            transform.localPosition = Vector3.zero;
+            Observable.EveryFixedUpdate()
+                .Subscribe(_ => MultDistance())
+                .AddTo(disposables);
+
+            Observable.EveryFixedUpdate()
+                .Subscribe(_ => InertiaCalculations())
+                .AddTo(disposables);
         }
-    }
 
-    public void MultDistance()
-    {
-        var followTargetPosition = followTarget.position;
-        var offsetFromTarget = transform.position - followTargetPosition;
-        transform.position = followTargetPosition + offsetFromTarget.normalized * multDistanceValue;
-    }
+        private void OnDisable()
+        {
+            disposables?.Dispose();
+            if (snapAndParentOnDisable)
+            {
+                if (this == null || followTarget == null) return;
+                transform.parent = followTarget.parent;
+                transform.localPosition = Vector3.zero;
+            }
+        }
 
-    public void InertiaCalculations()
-    {
-        var currentVelocity = physics.velocity;
-        inertia = Vector3.Lerp(inertia, currentVelocity, inertiaLerpValuePerSec * Time.fixedDeltaTime);
+        public void MultDistance()
+        {
+            var followTargetPosition = followTarget.position;
+            var offsetFromTarget = transform.position - followTargetPosition;
+            transform.position = followTargetPosition + offsetFromTarget.normalized * multDistanceValue;
+        }
 
-        transform.position += inertia * addInertiaMult;
+        public void InertiaCalculations()
+        {
+            var currentVelocity = physics.velocity;
+            inertia = Vector3.Lerp(inertia, currentVelocity, inertiaLerpValuePerSec * Time.fixedDeltaTime);
+
+            transform.position += inertia * addInertiaMult;
+        }
     }
 }

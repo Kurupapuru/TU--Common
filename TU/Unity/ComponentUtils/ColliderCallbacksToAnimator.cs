@@ -1,6 +1,7 @@
+using TU.Unity.Extensions;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace TU.Unity.ComponentUtils
 {
     public class ColliderCallbacksToAnimator : MonoBehaviour
     {

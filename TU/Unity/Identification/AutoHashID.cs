@@ -2,7 +2,7 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace TU.Unity.Identification
 {
     [Serializable]
     public class AutoHashID : IHaveID

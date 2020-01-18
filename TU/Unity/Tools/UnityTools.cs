@@ -1,57 +1,59 @@
 using System;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class UnityTools
+namespace TU.Unity.Tools
 {
-    public static class Scene
+    public static class UnityTools
     {
-        public static int? GetLoadedSceneID(Func<string, bool> predict)
+        public static class Scene
         {
-            for (int i = 0; i < SceneManager.sceneCount; i++)
+            public static int? GetLoadedSceneID(Func<string, bool> predict)
             {
-                var currentLevelScene = SceneManager.GetSceneAt(i);
-                if (predict.Invoke(currentLevelScene.name)) return currentLevelScene.buildIndex;
+                for (int i = 0; i < SceneManager.sceneCount; i++)
+                {
+                    var currentLevelScene = SceneManager.GetSceneAt(i);
+                    if (predict.Invoke(currentLevelScene.name)) return currentLevelScene.buildIndex;
+                }
+
+                return null;
             }
 
-            return null;
-        }
-
-        public static bool IsSceneLoaded(Func<string, bool> predict)
-        {
-            for (int i = 0; i < SceneManager.sceneCount; i++)
+            public static bool IsSceneLoaded(Func<string, bool> predict)
             {
-                var currentLevelScene = SceneManager.GetSceneAt(i);
-                if (predict.Invoke(currentLevelScene.name)) return true;
+                for (int i = 0; i < SceneManager.sceneCount; i++)
+                {
+                    var currentLevelScene = SceneManager.GetSceneAt(i);
+                    if (predict.Invoke(currentLevelScene.name)) return true;
+                }
+
+                return false;
             }
 
-            return false;
-        }
 
-
-        public static void RestartScene(Func<string, bool> predict)
-        {
-            if (SceneManager.sceneCount == 1)
+            public static void RestartScene(Func<string, bool> predict)
             {
-                SceneManager.LoadScene(GetLoadedSceneID(predict).Value);
+                if (SceneManager.sceneCount == 1)
+                {
+                    SceneManager.LoadScene(GetLoadedSceneID(predict).Value);
+                }
+                else
+                {
+                    var currentLevelSceneID = GetLoadedSceneID(predict).Value;
+                    SceneManager.sceneUnloaded += ReloadScene;
+                    SceneManager.UnloadSceneAsync(currentLevelSceneID);
+                }
             }
-            else
+
+            private static void ReloadScene(UnityEngine.SceneManagement.Scene scene)
             {
-                var currentLevelSceneID = GetLoadedSceneID(predict).Value;
-                SceneManager.sceneUnloaded += ReloadScene;
-                SceneManager.UnloadSceneAsync(currentLevelSceneID);
+                SceneManager.LoadScene(scene.buildIndex, LoadSceneMode.Additive);
+                SceneManager.sceneUnloaded -= ReloadScene;
             }
+
+
+            public static bool IsMainScene(string sceneName) => sceneName.ToLower().Contains("main");
         }
-
-        private static void ReloadScene(UnityEngine.SceneManagement.Scene scene)
-        {
-            SceneManager.LoadScene(scene.buildIndex, LoadSceneMode.Additive);
-            SceneManager.sceneUnloaded -= ReloadScene;
-        }
-
-
-        public static bool IsMainScene(string sceneName) => sceneName.ToLower().Contains("main");
+    
+    
     }
-    
-    
 }

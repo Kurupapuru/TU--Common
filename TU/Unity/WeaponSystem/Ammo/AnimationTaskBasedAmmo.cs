@@ -1,7 +1,6 @@
 ﻿using System;
 using AnimationTools.AnimationTasks;
 using Plugins.Lean.Pool;
-using SubProjects.GiantHalls.Code;
 using TU.Unity.HealthSystem;
 using TU.Unity.HealthSystem.Interfaces;
 using UniRx;

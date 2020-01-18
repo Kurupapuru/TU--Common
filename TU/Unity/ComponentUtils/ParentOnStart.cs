@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ParentOnStart : MonoBehaviour
+namespace TU.Unity.ComponentUtils
 {
-    public Transform parentTo;
-    
-    private void Start()
+    public class ParentOnStart : MonoBehaviour
     {
-        transform.parent = parentTo;
+        public Transform parentTo;
+    
+        private void Start()
+        {
+            transform.parent = parentTo;
+        }
     }
 }

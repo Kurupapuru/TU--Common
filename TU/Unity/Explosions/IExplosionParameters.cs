@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SubProjects.GiantHalls.Code
+namespace TU.Unity.Explosions
 {
     public interface IExplosionParameters
     {

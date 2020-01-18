@@ -1,4 +1,4 @@
-namespace DefaultNamespace
+namespace TU.Unity.Identification
 {
     public interface IHaveID
     {

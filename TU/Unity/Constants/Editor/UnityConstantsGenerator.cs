@@ -1,10 +1,10 @@
-using System.Text.RegularExpressions;
-using UnityEngine;
-using UnityEditor;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+using UnityEditor;
+using UnityEngine;
 
-namespace UnityToolbag
+namespace TU.Unity.Constants.Editor
 {
     public static class UnityConstantsGenerator
     {
