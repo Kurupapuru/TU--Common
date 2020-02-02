@@ -1,6 +1,6 @@
 // This file is auto-generated. Modifications are not saved.
 
-namespace UnityConstants
+namespace TU.Unity.Constants
 {
     public static class Tags
     {

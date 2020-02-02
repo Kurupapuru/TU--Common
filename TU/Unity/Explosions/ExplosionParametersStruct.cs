@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace SubProjects.GiantHalls.Code
+namespace TU.Unity.Explosions
 {
     [Serializable]
     public struct ExplosionParametersStruct : IExplosionParameters

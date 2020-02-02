@@ -2,7 +2,7 @@ using System;
 using UniRx;
 using UnityEngine;
 
-namespace ComponenetUtils
+namespace TU.Unity.ComponentUtils
 {
     public class FakePhysicsWatcher : MonoBehaviour
     {
