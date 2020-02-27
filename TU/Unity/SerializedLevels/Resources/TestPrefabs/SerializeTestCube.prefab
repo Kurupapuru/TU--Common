@@ -133,11 +133,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7340819277182210350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b67208169237e5c4698685a0b74b7b4b, type: 3}
+  m_Script: {fileID: 11500000, guid: e8b8b6cc149453d4fa3856de1a8d57af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7340819277182210350}
+  prefab: {fileID: 0}
   guid: 16b9ae87cd110464a882455ea53fee0d
-  assetPath: Assets/_Serialized Levels/Resources/TestPrefabs/SerializeTestCube.prefab
+  assetPath: Assets/TU--Common/TU/Unity/SerializedLevels/Resources/TestPrefabs/SerializeTestCube.prefab
   resourcesPath: TestPrefabs/SerializeTestCube
-  adressablePath: Assets/_Serialized Levels/Resources/TestPrefabs/SerializeTestCube.prefab
+  adressablePath: Assets/TU--Common/TU/Unity/SerializedLevels/Resources/TestPrefabs/SerializeTestCube.prefab
