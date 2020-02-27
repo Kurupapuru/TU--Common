@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Code.PoolSystem;
 using UnityEngine;
 
-namespace _Serialized_Levels.Code
+namespace TU.Unity.SerializedLevels
 {
     public class LevelSerializedRoot : MonoBehaviour
     {

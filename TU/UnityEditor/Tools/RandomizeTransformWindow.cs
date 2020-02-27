@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace _Serialized_Levels.Code
+namespace TU.UnityEditor.Tools
 {
     public class RandomizeTransformWindow : OdinEditorWindow
     {
@@ -54,3 +54,4 @@ namespace _Serialized_Levels.Code
         }
     }
 }
+#endif

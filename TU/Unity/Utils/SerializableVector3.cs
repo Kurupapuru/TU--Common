@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace _Serialized_Levels.Code
+namespace TU.Unity.Utils
 {
     [Serializable]
     public struct SerializableVector3

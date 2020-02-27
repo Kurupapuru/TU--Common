@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DontDestroyOnLoad : MonoBehaviour
+namespace TU.Unity.Utils
 {
-    private void Awake()
+    public class DontDestroyOnLoad : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }

@@ -1,17 +1,16 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
-using TU.Unity;
 using TU.Unity.Extensions;
 using TU.Unity.World;
 using UnityEngine;
-using System.Threading.Tasks;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace _Serialized_Levels.Code
+namespace TU.Unity.SerializedLevels
 {
     public class LevelSerializedPart : MonoBehaviour
     {
