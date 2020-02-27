@@ -38,7 +38,7 @@ namespace _Serialized_Levels.Code.SerializedLevels
                 if (transform.localRotation != prefabTransform.localRotation)
                     localEulerAngles = transform.localEulerAngles;
                 if (transform.localScale != prefabTransform.localScale)
-                    localScale = Vector3.zero;
+                    localScale = transform.localScale;
             }
             else
             {
@@ -46,8 +46,8 @@ namespace _Serialized_Levels.Code.SerializedLevels
                     localPosition = transform.localPosition;
                 if (transform.localRotation != Quaternion.identity)
                     localEulerAngles = transform.localEulerAngles;
-                if (transform.localScale != Vector3.zero)
-                    localScale = Vector3.zero;
+                if (transform.localScale != Vector3.one)
+                    localScale = transform.localScale;
                 
                 if (transform.childCount > 0)
                 {
@@ -68,19 +68,45 @@ namespace _Serialized_Levels.Code.SerializedLevels
             return this;
         }
 
-        public async Task<PrefabInfoContainer> SpawnAsync(PoolsManager poolsManager, Transform parent, Action completedCallback = null)
+        public async Task<GameObject> SpawnAsync(PoolsManager poolsManager, Transform parent, Action completedCallback = null)
         {
-            GameObject prefab = await LoadPrefab();
-            var spawned = poolsManager.Spawn(prefab, parent);
+            GameObject spawned;
+
+            if (!String.IsNullOrEmpty(AssetPath))
+            {
+                var prefab = await LoadPrefab();
+                spawned = poolsManager.Spawn(prefab, parent).gameObject;
+                
+                spawned.transform.localPosition = localPosition.HasValue
+                    ? (Vector3) localPosition.Value
+                    : prefab.transform.localPosition;
+                spawned.transform.localEulerAngles = localEulerAngles.HasValue
+                    ? (Vector3) localEulerAngles.Value
+                    : prefab.transform.localEulerAngles;
+                spawned.transform.localScale =
+                    localScale.HasValue ? (Vector3) localScale.Value : prefab.transform.localScale;
+            }
+            else
+            {
+                spawned = new GameObject("Group");
+                spawned.transform.parent = parent;
+                
+                spawned.transform.localPosition = localPosition.HasValue
+                    ? (Vector3) localPosition.Value
+                    : Vector3.zero;
+                spawned.transform.localEulerAngles = localEulerAngles.HasValue
+                    ? (Vector3) localEulerAngles.Value
+                    : Vector3.zero;
+                spawned.transform.localScale =
+                    localScale.HasValue ? (Vector3) localScale.Value : Vector3.one;
+            }
             
-            spawned.transform.localPosition = localPosition.HasValue ? (Vector3)localPosition.Value : prefab.transform.localPosition;
-            spawned.transform.localEulerAngles = localEulerAngles.HasValue ? (Vector3)localEulerAngles.Value : prefab.transform.localEulerAngles;
-            spawned.transform.localScale    = localScale.HasValue ? (Vector3)localScale.Value : prefab.transform.localScale;
+            
 
             if (Childs!=null && Childs.Length>0)
             {
                 spawned.gameObject.SetActive(false);
-                Task<PrefabInfoContainer>[] childSpawnTasks = new Task<PrefabInfoContainer>[Childs.Length];
+                Task<GameObject>[] childSpawnTasks = new Task<GameObject>[Childs.Length];
                 for (int i = 0; i < childSpawnTasks.Length; i++)
                 {
                     childSpawnTasks[i] = Childs[i].SpawnAsync(poolsManager, spawned.transform);
@@ -118,9 +144,9 @@ namespace _Serialized_Levels.Code.SerializedLevels
             return (GameObject) prefabRequest.asset;
         }
 
-        public Task<PrefabInfoContainer>[] SpawnChildsAsync(PoolsManager poolsManager, Transform parent)
+        public Task<GameObject>[] SpawnChildsAsync(PoolsManager poolsManager, Transform parent)
         {
-            Task<PrefabInfoContainer>[] childSpawnTasks = new Task<PrefabInfoContainer>[Childs.Length];
+            Task<GameObject>[] childSpawnTasks = new Task<GameObject>[Childs.Length];
         
             for (int i = 0; i < childSpawnTasks.Length; i++)
             {

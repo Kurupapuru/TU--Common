@@ -74,10 +74,16 @@ namespace TU.Unity.SerializedLevels
                     closestDistance = distance;
             }
         
-            if (closestDistance < loadDistance)
+            if (!loaded && closestDistance < loadDistance)
+            {
                 LoadAsync();
-            else if (closestDistance > unloadDistance)
-                Unload();
+                loaded = true;
+            }
+            else if (loaded && closestDistance > unloadDistance)
+            {
+                Unload(hierarchyRoot);
+                loaded = false;
+            }
         }
 
         private void Start()
@@ -106,15 +112,20 @@ namespace TU.Unity.SerializedLevels
             await Task.WhenAll(hierarchy.SpawnChildsAsync(root.levelSerializer.pools, hierarchyRoot));
         }
         
-        private void Unload()
+        private void Unload(Transform parent)
         {
-            if (!loaded) return;
-            loaded = false;
-
-            for (int i = hierarchyRoot.childCount - 1; i >= 0; i--)
+            for (int i = parent.childCount - 1; i >= 0; i--)
             {
-                root.levelSerializer.pools.Despawn(
-                    hierarchyRoot.GetChild(i).gameObject);
+                var childT = parent.GetChild(i);
+                var isPrefab = !childT.GetComponent<PrefabInfoContainer>().IsNull();
+                
+                if (!isPrefab)
+                    Unload(childT);
+
+                if (isPrefab) 
+                    root.levelSerializer.pools.Despawn(childT.gameObject);
+                else
+                    childT.gameObject.DestroySmart();
             }
         }
     }
