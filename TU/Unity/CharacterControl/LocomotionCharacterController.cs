@@ -1,5 +1,4 @@
 ﻿using System;
-using BehavioursBasedCamera;
 using KurupapuruLab.KRobots;
 using Lean.Touch;
 using Sirenix.OdinInspector;
@@ -95,7 +94,8 @@ namespace Shared.Code.CharacterControl
 
         private void RotateToScreenPosUpdate(Vector2 screenPos)
         {
-            var lookTo = WorldScanner.GetPointFromScreenRay(BehavioursBasedCameraController.instance.camera, screenPos,
+            //
+            var lookTo = WorldScanner.GetPointFromScreenRay(MainCamera.camera.Value, screenPos,
                 invisiblePlaneMask);
             if (lookTo == null) return;
 

@@ -1,7 +1,7 @@
-using BehavioursBasedCamera;
 using KurupapuruLab.KRobots;
 using MGame.Code.Skills.Base.Abstract;
 using MGame.Code.Skills.Base.Interfaces;
+using TU.Unity.CameraRelated;
 using UnityEngine;
 
 namespace MGame.Code.Skills.SimpleSkills
@@ -13,7 +13,7 @@ namespace MGame.Code.Skills.SimpleSkills
 
         public override bool Use(ISkillsUser user)
         {
-            cachedTeleportTo = WorldScanner.GetPointFromScreenRay(BehavioursBasedCameraController.instance.camera, Input.mousePosition, user.invisiblePlaneLayerMask);
+            cachedTeleportTo = WorldScanner.GetPointFromScreenRay(MainCamera.camera.Value, Input.mousePosition, user.invisiblePlaneLayerMask);
             if (cachedTeleportTo == null)
             {
                 Debug.LogError($"Skill \"{name}\". Can't Find location to teleport");
