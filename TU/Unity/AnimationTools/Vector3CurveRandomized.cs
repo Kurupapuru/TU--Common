@@ -1,10 +1,11 @@
+using NaughtyAttributes;
+using System;
+using AnimationTools.CurveParticles;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
 namespace DefaultNamespace
 {
-    using System;
-    using AnimationTools.CurveParticles;
-    using Sirenix.OdinInspector;
-    using UnityEngine;
-    using Random = UnityEngine.Random;
 
     [Serializable]
     public class Vector3CurveRandomized : IVector3Curve

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Sirenix.OdinInspector;
+using NaughtyAttributes;
 using UnityEngine;
 using Object = UnityEngine.Object;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -16,7 +17,7 @@ using UnityEditor;
 [Serializable]
 public class ResourcePath<T> where T : Object
 {
-    [ValueDropdown("GetAllResourcesPathsWithUnity")]
+    [Dropdown("GetAllResourcesPathsWithUnity")]
     public string path;
 
     

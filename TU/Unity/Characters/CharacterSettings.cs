@@ -1,16 +1,15 @@
 using MGame.Code.Skills.Base.Interfaces;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace MGame.Code.Characters
 {
     [CreateAssetMenu(fileName = "Unnamed Character", menuName = "MGame/Settings/Character")]
-    public class CharacterSettings : SerializedScriptableObject
+    public class CharacterSettings : ScriptableObject
     {
         [field: SerializeField] public string CharacterName { get; }
         [field: SerializeField] public Texture2D Icon { get; }
         [field: SerializeField] public float CooldownMax { get; }
-        [field: SerializeField] private ISkill[] skillsSettings { get; }
+        [field: SerializeField] private ISkill[] skillsSettings { get; } //TODO: ISkill serialization
 
         public ISkill[] CreateRuntimeSkills()
         {

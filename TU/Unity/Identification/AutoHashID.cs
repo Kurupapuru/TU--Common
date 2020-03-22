@@ -1,5 +1,4 @@
 using System;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace TU.Unity.Identification
@@ -7,8 +6,8 @@ namespace TU.Unity.Identification
     [Serializable]
     public class AutoHashID : IHaveID
     {
-        [SerializeField, HorizontalGroup("1", LabelWidth = 50)] private int id;
-        [SerializeField, HorizontalGroup("1", LabelWidth = 50)] private string name;
+        [SerializeField] private int id;
+        [SerializeField] private string name;
         
         public int Id => id;
         public string Name

@@ -1,7 +1,7 @@
 ﻿using System;
 using KurupapuruLab.KRobots;
 using Lean.Touch;
-using Sirenix.OdinInspector;
+using NaughtyAttributes;
 using TU.Unity.CameraRelated;
 using UniRx;
 using UnityEngine;

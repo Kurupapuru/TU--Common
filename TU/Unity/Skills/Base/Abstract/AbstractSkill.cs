@@ -1,11 +1,9 @@
-using System;
 using MGame.Code.Skills.Base.Interfaces;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace MGame.Code.Skills.Base.Abstract
 {
-    public abstract class AbstractSkill : SerializedScriptableObject, ISkill
+    public abstract class AbstractSkill : ScriptableObject, ISkill
     {
         [SerializeField] protected float cooldownMax;
 

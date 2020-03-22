@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Sirenix.OdinInspector;
+using NaughtyAttributes;
 using TU.Unity.Extensions;
 using TU.Unity.World;
 using UnityEngine;

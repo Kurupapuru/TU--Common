@@ -1,5 +1,5 @@
 ﻿using DefaultNamespace;
-using Sirenix.OdinInspector;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace TU.Unity.UI

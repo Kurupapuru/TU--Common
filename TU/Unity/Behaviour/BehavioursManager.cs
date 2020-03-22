@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
-using Sirenix.Utilities;
-using UniRx;
-using UnityEditor;
+using NaughtyAttributes;
+using TU.Sharp.Extensions;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace TU.Unity.Enabable
 {

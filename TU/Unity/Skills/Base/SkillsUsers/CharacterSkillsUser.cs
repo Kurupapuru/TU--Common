@@ -1,8 +1,5 @@
-using System;
-using System.ComponentModel;
 using MGame.Code.Characters;
 using MGame.Code.Skills.Base.Interfaces;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace MGame.Code.Skills.Base.SkillsUsers
@@ -16,7 +13,7 @@ namespace MGame.Code.Skills.Base.SkillsUsers
         public Transform UserTransform => transform;
         public Rigidbody UserRigidbody => userRigidbody;
 
-        [SerializeField] [InlineEditor()] private CharacterSettings _characterSettings;
+        [SerializeField] private CharacterSettings _characterSettings;
         [SerializeField] private KeyCode[] skillKeys;
         [SerializeField] private Rigidbody userRigidbody;
 

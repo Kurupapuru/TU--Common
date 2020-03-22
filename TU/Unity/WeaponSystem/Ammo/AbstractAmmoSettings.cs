@@ -1,7 +1,8 @@
+using NaughtyAttributes;
+
 namespace WeaponSystem.Ammo
 {
     using System;
-    using Sirenix.OdinInspector;
     using TU.Unity.World;
     using UnityEngine;
     
@@ -10,9 +11,9 @@ namespace WeaponSystem.Ammo
     {
         [SerializeField] private float _damage;
         [SerializeField] public bool _calculateSpeedByPerSecondValue;
-        [ShowIf("calculateSpeedByPerSecondValue", false)]
+        [ShowIf("calculateSpeedByPerSecondValue" )]
         [SerializeField] private float _speedPerSec;
-        [ShowIf("calculateSpeedByFixedValue",     false)]
+        [ShowIf("calculateSpeedByFixedValue"     )]
         [SerializeField] private float _fixedFlyTime;
         [SerializeField] private float _disapearAfter = 10;
         [SerializeField] private LayerMask _attackMask = new LayerMask();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sirenix.OdinInspector;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Code.PoolSystem
@@ -11,7 +11,7 @@ namespace Code.PoolSystem
     {
         public static readonly PoolsManager Default = new PoolsManager();
         
-        [ShowInInspector, ReadOnly] private readonly List<PrefabPool> pools = new List<PrefabPool>();
+        [ShowNonSerializedField] private readonly List<PrefabPool> pools = new List<PrefabPool>();
         
         [SerializeField] private Transform _parentAfterDespawnTo;
         public Transform ParentAfterDespawnTo

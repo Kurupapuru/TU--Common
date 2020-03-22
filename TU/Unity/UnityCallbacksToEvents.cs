@@ -1,4 +1,4 @@
-﻿using Sirenix.OdinInspector;
+﻿using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,11 +6,11 @@ namespace TU.Unity
 {
     public class UnityCallbacksToEvents : MonoBehaviour
     {
-        [FoldoutGroup("Awake",     false)] public UnityEvent OnAwakeEvent;
-        [FoldoutGroup("Start",     false)] public UnityEvent OnStartEvent;
-        [FoldoutGroup("OnEnable",  false)] public UnityEvent OnEnableEvent;
-        [FoldoutGroup("OnDisable", false)] public UnityEvent OnDisableEvent;
-        [FoldoutGroup("OnDestroy", false)] public UnityEvent OnDestroyEvent;
+        [BoxGroup("Awake")] public UnityEvent OnAwakeEvent;
+        [BoxGroup("Start")] public UnityEvent OnStartEvent;
+        [BoxGroup("OnEnable")] public UnityEvent OnEnableEvent;
+        [BoxGroup("OnDisable")] public UnityEvent OnDisableEvent;
+        [BoxGroup("OnDestroy")] public UnityEvent OnDestroyEvent;
 
         private void Awake()     => OnAwakeEvent?.Invoke();
         private void Start()     => OnStartEvent?.Invoke();
