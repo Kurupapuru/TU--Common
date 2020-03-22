@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Threading;
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -51,10 +52,10 @@ namespace TU.Unity.World
 
             #region Methods
 
-            async void DoDamageExplosion(ExplosionSettings.DamageExplosion damageExplosion)
+            IEnumerator DoDamageExplosion(ExplosionSettings.DamageExplosion damageExplosion)
             {
                 if (damageExplosion.activateAfter > 0)
-                    await TimeSpan.FromSeconds(damageExplosion.activateAfter);
+                    yield return new WaitForSeconds(damageExplosion.activateAfter);
 
                 var collsCount =
                     Physics.OverlapSphereNonAlloc(
@@ -78,10 +79,10 @@ namespace TU.Unity.World
                 }
             }
 
-            async void DoPhysicsExplosion(ExplosionSettings.PhysicsExplosion physicsExplosion)
+            IEnumerator DoPhysicsExplosion(ExplosionSettings.PhysicsExplosion physicsExplosion)
             {
                 if (physicsExplosion.activateTime > 0)
-                    await TimeSpan.FromSeconds(physicsExplosion.activateTime);
+                    yield return new WaitForSeconds(physicsExplosion.activateTime);
 
                 var collsCount =
                     Physics.OverlapSphereNonAlloc(
@@ -127,24 +128,5 @@ namespace TU.Unity.World
 
             #endregion
         }
-    }
-
-    public static class RxExtensions
-    {
-        /// <summary>
-        ///     Awaiter for TimeSpan.
-        /// </summary>
-        /// <param name="timeSpan">Any TimeSpan</param>
-        /// <returns>Awaiter</returns>
-        public static AsyncSubject<long> GetAwaiter(this TimeSpan timeSpan) =>
-            Observable.Timer(timeSpan).GetAwaiter();
-
-        /// <summary>
-        ///     Awaiter for TimeSpan with Cancellation.
-        /// </summary>
-        /// <param name="timeSpan">Any TimeSpan</param>
-        /// <returns>Awaiter</returns>
-        public static AsyncSubject<long> GetAwaiter(this TimeSpan timeSpan, CancellationToken cancellationToken) =>
-            Observable.Timer(timeSpan).GetAwaiter(cancellationToken);
     }
 }
