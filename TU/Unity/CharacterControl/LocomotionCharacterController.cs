@@ -3,6 +3,7 @@ using KurupapuruLab.KRobots;
 using Lean.Touch;
 using NaughtyAttributes;
 using TU.Unity.CameraRelated;
+using UnicornLib.Input;
 using UniRx;
 using UnityEngine;
 
@@ -10,15 +11,15 @@ namespace Shared.Code.CharacterControl
 {
     public class LocomotionCharacterController : MonoBehaviour
     {
-        [Header("References")] public Animator animator;
+        [Header("References")] 
+        public Rigidbody rb;
 
         [Header("Settings")]
         [OnValueChanged("UpdateMovementSpeed")]
         public float movementSpeedMultiplier = 1;
         public float rotationLerpSpeed = 1;
-        public LayerMask invisiblePlaneMask;
-
-        [Header("FirstPersonMouseCamera")]
+        public LayerMask lookAtMask;
+        [Space]
         public Camera topDownCamera;
         public Camera firstPersonCamera;
         private Transform firstPersonCameraT;
@@ -27,7 +28,8 @@ namespace Shared.Code.CharacterControl
         public float maxVerticalRotation = 80;
         public float verticalRotationSpeed   = 1;
         public float horizontalRotationSpeed = 1;
-        
+
+        private Vector3 movementVector;
         private CameraLerper _cameraLerper;
         private IDisposable behaviourTask;
 
@@ -42,8 +44,6 @@ namespace Shared.Code.CharacterControl
                     _cameraLerper = x.GetComponent<CameraLerper>();
             }).AddTo(this);
 
-            UpdateMovementSpeed();
-
             EnableTopDownWASDMovement();
             //EnableFirstPersonWASD();
         }
@@ -56,54 +56,51 @@ namespace Shared.Code.CharacterControl
                 EnableFirstPersonWASD();
         }
 
-        public void UpdateMovementSpeed()
+        private void FixedUpdate()
         {
-            animator.SetFloat("Movement Speed", movementSpeedMultiplier);
+            rb.MovePosition(rb.position + movementVector);
         }
+        
 
 
         #region TopDown WASD
 
         public void EnableTopDownWASDMovement()
         {
-            _cameraLerper.LerpTo(topDownCamera, 1, true);
+            _cameraLerper?.LerpTo(topDownCamera, 1, true);
             
             behaviourTask?.Dispose();
             behaviourTask = Observable.EveryUpdate().Subscribe(_ =>
             {
-                MovementUpdate(
-                    Input.GetAxis("Vertical"),
-                    Input.GetAxis("Horizontal"),
-                    true);
+                MovementUpdate(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"));
                 RotateToScreenPosUpdate(Input.mousePosition);
             });
         }
 
-        private void MovementUpdate(float verticalMovement, float horizontalMovement, bool rotateInput = false)
+        private void MovementUpdate(float verticalMovement, float horizontalMovement)
         {
-            var input3D = new Vector3(horizontalMovement, 0, verticalMovement);
-
-            if (rotateInput)
-                input3D =
-                    Quaternion.AngleAxis(_cameraLerper.transform.eulerAngles.y - transform.eulerAngles.y, Vector3.up) *
-                    input3D;
-
-            animator.SetFloat(-1348911080, input3D.z); // Movement Vertical
-            animator.SetFloat(760785499, input3D.x); // Movement Horizontal
+            movementVector = new Vector3(horizontalMovement, 0, verticalMovement) * movementSpeedMultiplier;
         }
 
         private void RotateToScreenPosUpdate(Vector2 screenPos)
         {
-            //
-            var lookTo = WorldScanner.GetPointFromScreenRay(MainCamera.camera.Value, screenPos,
-                invisiblePlaneMask);
-            if (lookTo == null) return;
-
-            var lookDirection = lookTo.Value - transform.position;
+            Vector3 lookAt;
+            var screenPosRay = RaycastHelper.GetRay(screenPos);
+            Physics.Raycast(screenPosRay, out var hit, 100, lookAtMask);
+            if (hit.collider != null)
+                lookAt = hit.point;
+            else
+            {
+                var playerPlane = new Plane(Vector3.up, transform.position);
+                playerPlane.Raycast(screenPosRay, out var enterDistance);
+                lookAt = screenPosRay.GetPoint(enterDistance);
+            }
+                
+            var lookDirection = lookAt - transform.position;
             if (lookDirection == Vector3.zero) return;
 
             var rotationEuler = transform.eulerAngles;
-            rotationEuler.y = Quaternion.LookRotation(lookTo.Value - transform.position).eulerAngles.y;
+            rotationEuler.y = Quaternion.LookRotation(lookDirection).eulerAngles.y;
             transform.eulerAngles =
                 MathGod.LerpEulerAngle(transform.eulerAngles, rotationEuler, rotationLerpSpeed * Time.deltaTime);
         }
@@ -122,8 +119,7 @@ namespace Shared.Code.CharacterControl
             {
                 MovementUpdate(
                     Input.GetAxis("Vertical"),
-                    Input.GetAxis("Horizontal"),
-                    false);
+                    Input.GetAxis("Horizontal"));
 
                 FirstPersonMouseCameraUpdate();
             });
