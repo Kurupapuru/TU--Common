@@ -13,7 +13,18 @@ namespace TU.Sharp.Extensions
                 action.Invoke(variable);
         }
 
-        public static bool TryModifyElement<T>(this List<T> source, Predicate<T> match, RefAction<T> modify)
+        public static int FindIndex<T>(this IList<T> source, Func<T, bool> match)
+        {
+            for (int i = 0; i < source.Count; i++)
+            {
+                if (match.Invoke(source[i]))
+                    return i;
+            }
+
+            return -1;
+        }
+
+        public static bool TryModifyElement<T>(this IList<T> source, Func<T, bool> match, RefAction<T> modify)
         {
             var index = source.FindIndex(match);
             
