@@ -1,24 +1,31 @@
 using System.Collections.Generic;
-using GameSystems.Inventory;
-using GameSystems.Inventory.Abstract;
-using TU.Common.Generatable.Inventory.Abstract;
 using TU.Sharp.Extensions;
+using UniRx;
 using UnityEngine;
 
 namespace UXK.Inventory
 {
     public interface IBag : IItem
     {
-        IBag                         ParentBag { get; }
+        IBag                         ParentBag { get; set; }
         IBagConfig                   Config    { get; }
-        IReadOnlyList<ItemWithAmount> Items     { get; }
+        IReadOnlyReactiveDictionary<IItem, uint> Items     { get; }
 
 
-        bool AddItems(params ItemWithAmount[] items);
-        bool AddItem(ItemWithAmount           items);
+        // Add
+        bool AddItems(params IItemWithAmount[] items);
+        bool AddItem(IItemWithAmount           item);
 
-        bool CanAddItems(params ItemWithAmount[] items);
-        bool CanAddItem(ItemWithAmount           item);
+        bool CanAddItems(params IItemWithAmount[] items);
+        bool CanAddItem(IItemWithAmount           item);
+
+        // Remove
+        bool RemoveItem(IItemWithAmount items);
+        bool RemoveItems(params IItemWithAmount[] items);
+        
+        bool CanRemoveItem(IItemWithAmount item);
+        bool CanRemoveItems(params IItemWithAmount[] item);
+        
 
 
 #if INV_WEIGHT

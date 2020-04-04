@@ -1,5 +1,4 @@
-﻿using GameSystems.Inventory.Abstract;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UXK.Inventory
 {

@@ -1,4 +1,4 @@
-﻿namespace GameSystems.Inventory.Abstract
+﻿namespace UXK.Inventory
 {
     public interface ICategory
     {

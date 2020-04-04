@@ -1,4 +1,4 @@
-namespace GameSystems.Inventory
+namespace UXK.Inventory
 {
     public class PlayerInventory
     {
