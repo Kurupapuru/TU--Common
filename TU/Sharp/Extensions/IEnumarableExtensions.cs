@@ -12,5 +12,18 @@ namespace TU.Sharp.Extensions
             foreach (var variable in source)
                 action.Invoke(variable);
         }
+
+        public static bool TryModifyElement<T>(this List<T> source, Predicate<T> match, RefAction<T> modify)
+        {
+            var index = source.FindIndex(match);
+            
+            if (index < 0)
+                return false;
+            
+            var value = source[index];
+            modify.Invoke(ref value);
+            source[index] = value;
+            return true; 
+        }
     }
 }
