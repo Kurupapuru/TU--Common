@@ -1,27 +1,42 @@
 ﻿using System;
+using MessagePack;
 using UnityEngine;
 
 namespace UXK.Inventory
 {
-    [Serializable]
+    [Serializable, MessagePackObject(true)]
     public class Item : IItem
     {
-        [SerializeField] private string     _name         = "Unnamed";
-        [SerializeField] private string     _description  = "";
-        [SerializeField] private ICategory  _getCategory  = null;
-        [SerializeField] private uint       _cost         = 100;
-        [SerializeField] private Sprite     _icon         = null;
-        [SerializeField] private GameObject _visualPrefab = null;
+        [SerializeField] [Key("name")]         private string     _name         = "Unnamed";
+        [SerializeField] [Key("description")]  private string     _description  = "";
+        [SerializeField] [Key("getCategory")]  private ICategory  _getCategory  = null;
+        [SerializeField] [Key("cost")]         private uint       _cost         = 100;
+        [SerializeField] [Key("icon")]         private Sprite     _icon         = null;
+        [SerializeField] [Key("visualPrefab")] private GameObject _visualPrefab = null;
 
 
         #region IItem
-        public string    Name        => _name;
-        public string    Description => _description;
-        public ICategory GetCategory => _getCategory;
-        public uint      Cost        => _cost;
+        [IgnoreMember] public string    Name        => _name;
+        [IgnoreMember] public string    Description => _description;
+        [IgnoreMember] public ICategory GetCategory => _getCategory;
+        [IgnoreMember] public uint      Cost        => _cost;
 
         public GameObject GetVisualPrefab() => _visualPrefab;
         public Sprite     GetIconSprite()   => _icon;
+        #endregion
+
+
+        #region IHasId
+        private int _nameHashCode = -1;
+        public int Id
+        {
+            get
+            {
+                if (_nameHashCode == -1)
+                    _nameHashCode = Name.GetHashCode();
+                return _nameHashCode;
+            }
+        }
         #endregion
     }
 }

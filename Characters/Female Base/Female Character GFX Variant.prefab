@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2981803950795360521}
-  pullRootMotion: 1
-  motionToAnimator: 1
+  pullRootMotion: 0
+  motionToAnimator: 0
 --- !u!1001 &185151067406634857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -95,7 +95,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: b784b0947f9ca3242ad61f4b85a2f8e4,
         type: 3}
       propertyPath: m_Name
-      value: Female Character GFX
+      value: Female Character GFX Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b784b0947f9ca3242ad61f4b85a2f8e4, type: 3}

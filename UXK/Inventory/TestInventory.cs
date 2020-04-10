@@ -1,9 +1,10 @@
-﻿using System;
+﻿#define INV_DEBUGGING
+
 using UniRx;
 using UnityEngine;
 
 namespace UXK.Inventory
-{
+{    
     public class Inventory : MonoBehaviour
     {
         // Inspector
@@ -20,7 +21,7 @@ namespace UXK.Inventory
         }
         private Bag bf_bag;
         
-#if UNITY_EDITOR
+#if UNITY_EDITOR && INV_DEBUGGING
         [Header("Debugging")]
         [SerializeField] private bool debug;
         [ContextMenuItem("Add", "AddTestItem")]

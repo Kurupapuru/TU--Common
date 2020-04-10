@@ -1,19 +1,20 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using MessagePack;
 using TU.Sharp.Extensions;
 using UniRx;
 using UnityEngine;
 
 namespace UXK.Inventory
 {
+    [MessagePackObject(), Serializable]
     public class Bag : IBag, IItem
     {
         #region IItem
-        string IItem.   Name        => Config.Name;
-        string IItem.   Description => Config.Description;
-        ICategory IItem.GetCategory => Config.GetCategory;
-        uint IItem.Cost
+        [IgnoreMember] public string Name        => Config.Name;
+        [IgnoreMember] public string Description => Config.Description;
+        [IgnoreMember] public ICategory GetCategory => Config.GetCategory;
+        [IgnoreMember] public uint Cost
         {
             get
             {
@@ -23,15 +24,15 @@ namespace UXK.Inventory
             }
         }
 
-        GameObject IItem.GetVisualPrefab() => Config.GetVisualPrefab();
+        public GameObject GetVisualPrefab() => Config.GetVisualPrefab();
 
-        Sprite IItem.GetIconSprite() => Config.GetIconSprite();
+        public Sprite GetIconSprite() => Config.GetIconSprite();
         #endregion
         
         #region IBag
-        public IBag                          ParentBag { get => _parentBag; set => _parentBag = value; }
-        public IBagConfig                    Config    => _config;
-        public IReadOnlyReactiveDictionary<IItem, uint> Items     => _items;
+        [IgnoreMember] public IBag                          ParentBag { get => _parentBag; set => _parentBag = value; }
+        [IgnoreMember] public IBagConfig                    Config    => _config;
+        [IgnoreMember] public IReadOnlyReactiveDictionary<IItem, uint> Items     => _items;
 
         public virtual bool AddItems(params IItemWithAmount[] items)
         {
@@ -112,14 +113,44 @@ namespace UXK.Inventory
         #endregion
         #endregion
         
-        private IBag                 _parentBag;
-        private IBagConfig           _config;
-        private ReactiveDictionary<IItem, uint> _items = new ReactiveDictionary<IItem, uint>();
+        #region IHasId
+        private int _nameHashCode = -1;
+        public int Id
+        {
+            get
+            {
+                if (_nameHashCode == -1)
+                    _nameHashCode = Name.GetHashCode();
+                return _nameHashCode;
+            }
+        }
+        #endregion
+        
+        [IgnoreMember] private IBag                 _parentBag;
+        [Key(0), SerializeField] private IBagConfig           _config;
+        [Key(1), SerializeField] private ReactiveDictionary<IItem, uint> _items;
 
-        public Bag(IBagConfig config, IBag parentBag = null)
+        public Bag(IBagConfig config, IBag parentBag = null, ReactiveDictionary<IItem, uint> items = null)
         {
             _config = config;
+            
             _parentBag = parentBag;
+            
+            if (items == null)
+                _items = new ReactiveDictionary<IItem, uint>();
+            else
+                _items = items;
+        }
+
+        // For MessagePack
+        public Bag(IBagConfig config, ReactiveDictionary<IItem, uint> items)
+        {
+            this._config = config;
+            this._items = items;
+        }
+
+        public Bag()
+        {
         }
     }
 }

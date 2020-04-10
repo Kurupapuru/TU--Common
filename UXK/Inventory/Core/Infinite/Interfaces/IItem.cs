@@ -1,8 +1,14 @@
-﻿using UnityEngine;
+﻿using MessagePack;
+using UnityEngine;
 
 namespace UXK.Inventory
 {
-    public interface IItem
+    [Union(0, typeof(BagConfig))]
+    [Union(1, typeof(BagConfigScriptable))]
+    [Union(2, typeof(Item))]
+    [Union(3, typeof(ItemScriptable))]
+    [Union(4, typeof(Bag))]
+    public interface IItem : IHasId
     {
         string    Name        { get; }
         string    Description { get; }

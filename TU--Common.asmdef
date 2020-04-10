@@ -2,7 +2,8 @@
     "name": "TU--Common",
     "references": [
         "GUID:776d03a35f1b52c4a9aed9f56d7b4229",
-        "GUID:2834a31340b834f42943b439d45033f5"
+        "GUID:2834a31340b834f42943b439d45033f5",
+        "GUID:ddc6e27fff8ae94ed9ccb00c84df6e24"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

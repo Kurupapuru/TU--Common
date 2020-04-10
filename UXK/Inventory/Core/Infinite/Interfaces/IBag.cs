@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using MessagePack;
 using TU.Sharp.Extensions;
 using UniRx;
 using UnityEngine;
 
 namespace UXK.Inventory
 {
+    [Union(0, typeof(Bag))]
     public interface IBag : IItem
     {
         IBag                         ParentBag { get; set; }
