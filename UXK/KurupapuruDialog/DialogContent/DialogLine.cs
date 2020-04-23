@@ -13,5 +13,10 @@ namespace UXK.KurupapuruDialog
             Actor  = actor;
             Phrase = phrase;
         }
+
+        public override string ToString()
+        {
+            return $"{Actor} : {Phrase}";
+        }
     }
 }

@@ -9,10 +9,15 @@ namespace NaughtyAttributes.Editor
 	{
 		public static IEnumerable<FieldInfo> GetAllFields(object target, Func<FieldInfo, bool> predicate)
 		{
-			List<Type> types = new List<Type>()
-			{
-				target.GetType()
-			};
+			List<Type> types;
+
+			if (target != null)
+				types = new List<Type>()
+				{
+					target.GetType()
+				};
+			else
+				types = new List<Type>();
 
 			while (types.Last().BaseType != null)
 			{

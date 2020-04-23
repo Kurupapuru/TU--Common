@@ -64,11 +64,10 @@ namespace GameDynamics.Character
         private void IsOnSlopeCheck(RaycastHit hit)
         {
             var hitAngle = Vector3.Angle(Vector3.up, hit.normal);
-            Debug.DrawRay(hit.point, hit.normal, Color.red, .1f, false);
+            //Debug.DrawRay(hit.point, hit.normal, Color.red, .1f, false);
             IsOnSlope = hit.collider != null 
                         && 
                         hitAngle >= slopeAngle;
-            Debug.Log(hitAngle);
         }
 
         private void MaterialByIsOnSlope()
