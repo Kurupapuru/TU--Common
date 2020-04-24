@@ -4,7 +4,7 @@ using UXK.UnityUtils;
 
 namespace UXK.Inventory.View
 {
-    public class ItemWithAmountView : MonoBehaviour, IViewOfHasId<ItemWithAmount>
+    public class IItemWithAmountView : MonoBehaviour, IViewOfHasId<IItemWithAmount>
     {
         // Inspector
         [SerializeField] private RectTransform _rectTransform;
@@ -13,16 +13,17 @@ namespace UXK.Inventory.View
         [SerializeField] private Text _countText;
         
         public RectTransform RectTransform => _rectTransform;
-        public ItemWithAmount Value { get; private set; }
+        public IItemWithAmount Value { get; private set; }
 
-        public void SetupFor(ItemWithAmount value)
+        public void SetupFor(IItemWithAmount value)
         {
             Value = value;
 
             if (value.Item == null)
             {
                 _iconImage.texture = null;
-                _nameText.text = "Null Item";
+                if (_nameText!=null) 
+                    _nameText.text = "Null Item";
                 _countText.text = value.Amount.ToString();
                 Debug.LogError("Item is null");
                 return;
@@ -33,7 +34,10 @@ namespace UXK.Inventory.View
                 _iconImage.SetSprite(sprite);
             else
                 _iconImage.texture = null;
-            _nameText.text = value.Item.Name;
+            
+            if (_nameText !=null)
+                _nameText.text = value.Item.Name;
+            
             _countText.text = value.Amount.ToString();
         }
     }

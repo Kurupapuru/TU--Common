@@ -17,7 +17,7 @@ namespace UXK.Inventory.View
         private IBag _bag;
         private CompositeDisposable _disposables = new CompositeDisposable();
 
-        private List<ItemWithAmount> _items;
+        private List<IItemWithAmount> _items;
         
 
         public void Hide()  => gameObject.SetActive(false);
@@ -28,7 +28,7 @@ namespace UXK.Inventory.View
             gameObject.SetActive(true);
             _bag = bag;
             
-            _items = bag.Items.Select(x => new ItemWithAmount(x.Key, x.Value)).ToList();
+            _items = bag.Items.Select(x => (IItemWithAmount)new ItemWithAmount(x.Key, x.Value)).ToList();
             _infScroll.Initialize(_items);
             
             AddSubscriptions(bag);
@@ -47,11 +47,11 @@ namespace UXK.Inventory.View
                 _infScroll.OnBeforeListChange();
                 _items.Remove(new ItemWithAmount(x.Key, x.Value));
             }).AddTo(_disposables);
-            _bag.Items.ObserveReplace().Subscribe(x =>
+            _bag.Items.ObserveReplace().Subscribe(replaceEvent =>
             {
                 _infScroll.OnBeforeListChange();
-                var index = _items.FindIndex(v => v.Id == x.Key.Id);
-                _items[index] = new ItemWithAmount(x.Key, x.NewValue);
+                var index = _items.FindIndex(v => v.Item == replaceEvent.Key);
+                _items[index] = new ItemWithAmount(replaceEvent.Key, replaceEvent.NewValue);
             }).AddTo(_disposables);
         }
 

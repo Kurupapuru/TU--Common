@@ -18,6 +18,6 @@ public class DestroyOnDeath : MonoBehaviour
 
     private void OnDestroy()
     {
-        _destroyOnDeathSub.Dispose();
+        _destroyOnDeathSub?.Dispose();
     }
 }

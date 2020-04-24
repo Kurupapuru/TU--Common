@@ -1,4 +1,4 @@
 ﻿namespace UXK.Inventory.View
 {
-    public class ItemWithAmountScroller : InfiniteScroller<ItemWithAmount, ItemWithAmountView>{}
+    public class ItemWithAmountScroller : InfiniteScroller<IItemWithAmount, IItemWithAmountView>{}
 }

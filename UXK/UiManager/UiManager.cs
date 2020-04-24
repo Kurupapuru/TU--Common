@@ -88,7 +88,7 @@ namespace UXK.UiManager
             if (windowsWithParams.TryGetValue(type, out var founded))
                 return ((TWindow) founded);
             else
-                throw new ArgumentOutOfRangeException($"Cant find window <b>{type.FullName}</b>");
+                throw new Exception($"Cant find window <b>{type.FullName}</b>");
         }
     }
 }

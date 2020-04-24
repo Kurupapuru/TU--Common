@@ -15,20 +15,20 @@ namespace UXK.Inventory
 
 
         // Add
-        bool AddItems(params IItemWithAmount[] items);
+        bool AddItems(IEnumerable<IItemWithAmount> items);
         bool AddItem(IItemWithAmount           item);
 
-        bool CanAddItems(params IItemWithAmount[] items);
+        bool CanAddItems(IEnumerable<IItemWithAmount> items);
         bool CanAddItem(IItemWithAmount           item);
 
         // Remove
         bool RemoveItem(IItemWithAmount items);
-        bool RemoveItems(params IItemWithAmount[] items);
+        bool RemoveItems(IEnumerable<IItemWithAmount> items);
         
         bool CanRemoveItem(IItemWithAmount item);
-        bool CanRemoveItems(params IItemWithAmount[] item);
-        
+        bool CanRemoveItems(IEnumerable<IItemWithAmount> item);
 
+        IBag CreateCopy();
 
 #if INV_WEIGHT
         /// <summary>

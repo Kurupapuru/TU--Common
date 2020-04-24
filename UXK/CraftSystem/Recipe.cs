@@ -27,8 +27,8 @@ public class Recipe : IRecipe
     
     // Interface
     public bool AdditionalRequirementCheck() => true;
-    public IEnumerable<IItemWithAmount> RequiredItems { get; }
-    public IEnumerable<IItemWithAmount> ResultItems { get; }
+    public IEnumerable<IItemWithAmount> RequiredItems => bf_requiredItems;
+    public IEnumerable<IItemWithAmount> ResultItems => bf_resultItems;
 
     public int Id => bf_id;
 }

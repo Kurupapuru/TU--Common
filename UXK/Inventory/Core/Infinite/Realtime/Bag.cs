@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using MessagePack;
 using TU.Sharp.Extensions;
@@ -29,12 +30,13 @@ namespace UXK.Inventory
         public Sprite GetIconSprite() => Config.GetIconSprite();
         #endregion
         
+        
         #region IBag
         [IgnoreMember] public IBag                          ParentBag { get => _parentBag; set => _parentBag = value; }
         [IgnoreMember] public IBagConfig                    Config    => _config;
         [IgnoreMember] public IReadOnlyReactiveDictionary<IItem, uint> Items     => _items;
 
-        public virtual bool AddItems(params IItemWithAmount[] items)
+        public virtual bool AddItems(IEnumerable<IItemWithAmount> items)
         {
             var canAddItems = CanAddItems(items); 
             
@@ -65,7 +67,7 @@ namespace UXK.Inventory
                 _items[addItem.Item] = addItem.Amount;
         }
 
-        public virtual bool CanAddItems(params IItemWithAmount[] items)
+        public virtual bool CanAddItems(IEnumerable<IItemWithAmount> items)
         {
             return true;
         }
@@ -85,7 +87,7 @@ namespace UXK.Inventory
             return canRemove;
         }
 
-        public bool RemoveItems(params IItemWithAmount[] items)
+        public bool RemoveItems(IEnumerable<IItemWithAmount> items)
         {
             var canRemove = CanRemoveItems(items);
             if (canRemove)
@@ -109,9 +111,26 @@ namespace UXK.Inventory
                 return item.Amount == 0;
         }
 
-        public bool CanRemoveItems(params IItemWithAmount[] items) => items.All(CanRemoveItem);
+        public bool CanRemoveItems(IEnumerable<IItemWithAmount> items) => 
+            ItemWithAmount.ConcatSameItems(items)
+                .Cast<IItemWithAmount>()
+                .All(CanRemoveItem);
         #endregion
+        
+        
+        public IBag CreateCopy()
+        {
+            var itemsCopy = new ReactiveDictionary<IItem, uint>();
+            
+            foreach (var item in _items)
+                itemsCopy.Add(item.Key, item.Value);
+            
+            var copy = new Bag(_config, _parentBag, itemsCopy);
+            return copy;
+        }
+        
         #endregion
+        
         
         #region IHasId
         private int _nameHashCode = -1;
@@ -147,10 +166,6 @@ namespace UXK.Inventory
         {
             this._config = config;
             this._items = items;
-        }
-
-        public Bag()
-        {
         }
     }
 }

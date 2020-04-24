@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace UXK.Inventory
@@ -22,6 +24,20 @@ namespace UXK.Inventory
             internal set => _amount = value;
         }
         public int Id => _item.Id;
+
+        public static IEnumerable<ItemWithAmount> ConcatSameItems(IEnumerable<IItemWithAmount> items)
+        {
+            var dict = new Dictionary<IItem, uint>(items.Count());
+            foreach (var itemWithAmount in items)
+            {
+                if (dict.TryGetValue(itemWithAmount.Item, out var existed))
+                    dict[itemWithAmount.Item] = existed + itemWithAmount.Amount;
+                else
+                    dict[itemWithAmount.Item] = itemWithAmount.Amount;
+            }
+
+            return dict.Select(x => new ItemWithAmount(x.Key, x.Value));
+        }
     }
 
     [Serializable]
