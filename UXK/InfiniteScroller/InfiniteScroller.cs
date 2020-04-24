@@ -24,11 +24,12 @@ public class InfiniteScroller<TItem, TView> : MonoBehaviour
     public ScrollRect scrollRect;
     public TView itemPrefab;
     public float itemSize;
+    public float fromBottomToTop = 1;
 
     private RectTransform container;
     private RectTransform scrollRectT;
 
-    private List<TItem> itemsList;
+    protected List<TItem> itemsList;
     public Dictionary<TItem, TView> activeViews;
     private List<TView> despawnedViews;
     public Action<TView> onViewSpawn;
@@ -84,7 +85,7 @@ public class InfiniteScroller<TItem, TView> : MonoBehaviour
             var item = itemsList[i];
             var view = GetView();
             view.SetupFor(item);
-            view.RectTransform.anchoredPosition = new Vector2(0, i * itemSize);
+            view.RectTransform.anchoredPosition = new Vector2(0, i * itemSize * fromBottomToTop);
             activeViews[item]                   = view;
         }
     }

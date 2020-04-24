@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
@@ -13,10 +12,15 @@ namespace UXK.Inventory.View
         [SerializeField] private ItemWithAmountScroller _infScroll;
         [SerializeField] private Button _closeButton;
         
+        public bool Enabled => gameObject.activeSelf;
+        
         private IBag _bag;
         private CompositeDisposable _disposables = new CompositeDisposable();
 
         private List<ItemWithAmount> _items;
+        
+
+        public void Hide()  => gameObject.SetActive(false);
         
         public void ShowFor(IBag bag)
         {

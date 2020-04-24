@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UXK.UnityUtils;
 
 namespace UXK.Inventory.View
 {
@@ -19,12 +20,17 @@ namespace UXK.Inventory.View
             Value = value;
 
             if (value.Item == null)
+            {
+                _iconImage.texture = null;
+                _nameText.text = "Null Item";
+                _countText.text = value.Amount.ToString();
                 Debug.LogError("Item is null");
-
+                return;
+            }
 
             var sprite = value.Item.GetIconSprite();
             if (sprite != null)
-                _iconImage.texture = sprite.texture;
+                _iconImage.SetSprite(sprite);
             else
                 _iconImage.texture = null;
             _nameText.text = value.Item.Name;

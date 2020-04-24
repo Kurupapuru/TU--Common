@@ -6,6 +6,8 @@ namespace UXK.UiManager
 {
     public interface IUiWindow
     {
+        bool Enabled { get; }
+        void Hide();
     }
 
     public interface IUiWindowSimple : IUiWindow
@@ -68,11 +70,25 @@ namespace UXK.UiManager
                 Debug.LogError($"Cant find simple window of type {type.Name}");
         }
 
-        public static void Show<TWindow, TParam>(TParam param) where TWindow : IUiWindowWithParam<TParam>
+        public static void Switch<TWindow, TParam>(TParam param) where TWindow : IUiWindowWithParam<TParam>
+        {
+            var window = Get<TWindow, TParam>();
+            if (window.Enabled)
+                window.Hide();
+            else
+                window.ShowFor(param);
+        }
+
+        public static void Show<TWindow, TParam>(TParam param) where TWindow : IUiWindowWithParam<TParam> => 
+            Get<TWindow, TParam>().ShowFor(param);
+
+        public static TWindow Get<TWindow, TParam>() where TWindow : IUiWindowWithParam<TParam>
         {
             var type = typeof(TWindow);
             if (windowsWithParams.TryGetValue(type, out var founded))
-                ((TWindow)founded).ShowFor(param);
+                return ((TWindow) founded);
+            else
+                throw new ArgumentOutOfRangeException($"Cant find window <b>{type.FullName}</b>");
         }
     }
 }
