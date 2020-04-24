@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,6 +36,19 @@ namespace TU.Sharp.Extensions
             modify.Invoke(ref value);
             source[index] = value;
             return true; 
+        }
+
+        public static bool IsHaveCount(this IEnumerable source, int count)
+        {
+            int haveCount = 0;
+            foreach (var obj in source)
+            {
+                haveCount++;
+                if (haveCount >= count)
+                    return true;
+            }
+
+            return count == 0;
         }
     }
 }
