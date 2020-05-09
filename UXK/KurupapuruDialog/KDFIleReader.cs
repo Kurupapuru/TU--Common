@@ -249,7 +249,6 @@ namespace UXK.KurupapuruDialog
             return lineTabulation;
         }
 
-        // Sub Methods
         private static bool TryGetMatch(string input, string pattern, out Match result)
         {
             result = Regex.Match(input, pattern);
